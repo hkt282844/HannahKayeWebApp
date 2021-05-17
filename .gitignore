@@ -1,3 +1,4 @@
 env
 WebsiteWriteup.txt
 .DS_Store
+__pycache__/
