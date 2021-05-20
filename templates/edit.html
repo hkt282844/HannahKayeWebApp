@@ -1,3 +1,5 @@
+<!--Edit page to edit and delete content-->
+
 {% extends 'base.html' %}
 
 {% block content %}
@@ -22,4 +24,11 @@
   </div>
 </form>
 <hr>
+
+<form action="{{ url_for('delete', id=post['id']) }}" method="POST">
+  <input type="submit" value="Delete Post"
+         class="btn btn-danger btn-sm"
+         onclick="return confirm('Are you sure you want to delete this post?')">
+</form>
+
 {% endblock %}

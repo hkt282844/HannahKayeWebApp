@@ -70,3 +70,13 @@ def edit(id):
       return redirect(url_for('index'))
 
   return render_template('edit.html', post=post)
+
+@app.route('/<int:id>/delete', methods=('POST',))
+def delete(id):
+  post = get_post(id)
+  connection = get_db_connection()
+  connection.execute('DELETE FROM posts WHERE id = ?', (id,))
+  connection.commit()
+  connection.close()
+  flash('"{}" was successfully deleted!'.format(post['title']))
+  return redirect(url_for('index'))
