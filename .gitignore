@@ -2,5 +2,6 @@ env
 WebsiteWriteup.txt
 .DS_Store
 __pycache__/
-database.db
 config.py
+init_db.py
+db.sqlite

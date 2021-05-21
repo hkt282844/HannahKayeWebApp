@@ -2,8 +2,8 @@ import sqlite3
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import abort
+from flask_login import LoginManager
 
-# init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 
 def create_app():
@@ -14,22 +14,26 @@ def create_app():
 
   db.init_app(app)
 
-  # blueprint for auth routes in our app
+  login_manager = LoginManager()
+  login_manager.login_view = 'auth.login'
+  login_manager.init_app(app)
+
+  from .models import User
+
+  @login_manager.user_loader
+  def load_user(user_id):
+    return User.query.get(int(user_id))
+
   from .auth import auth as auth_blueprint
   app.register_blueprint(auth_blueprint)
 
-  # blueprint for non-auth parts of app
   from .main import main as main_blueprint
   app.register_blueprint(main_blueprint)
-
-  # blueprint for admin parts of app
-  from .admin import admin as admin_blueprint
-  app.register_blueprint(admin_blueprint)
 
   return app
 
 def get_db_connection():
-  connection = sqlite3.connect('database.db')
+  connection = sqlite3.connect('project/db.sqlite')
   connection.row_factory = sqlite3.Row
   return connection
 
