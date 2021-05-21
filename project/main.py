@@ -32,7 +32,7 @@ def create():
                          (title, content))
       connection.commit()
       connection.close()
-      return redirect(url_for('index'))
+      return redirect(url_for('main.index'))
 
   return render_template('create.html')
 
@@ -54,7 +54,7 @@ def edit(id):
                          (title, content, id))
       connection.commit()
       connection.close()
-      return redirect(url_for('index'))
+      return redirect(url_for('main.index'))
 
   return render_template('edit.html', post=post)
 
@@ -67,4 +67,4 @@ def delete(id):
   connection.commit()
   connection.close()
   flash('"{}" was successfully deleted!'.format(post['title']))
-  return redirect(url_for('index'))
+  return redirect(url_for('main.index'))
