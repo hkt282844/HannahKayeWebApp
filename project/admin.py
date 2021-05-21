@@ -9,7 +9,7 @@ def admin_index():
   connection = get_db_connection()
   posts = connection.execute('SELECT * FROM posts').fetchall()
   connection.close()
-  return render_template('admin_index.html', posts=posts)
+  return render_template('admin.html', posts=posts)
 
 @admin.route('/create', methods=('GET', 'POST'))
 def create():
@@ -25,7 +25,7 @@ def create():
                          (title, content))
       connection.commit()
       connection.close()
-      return redirect(url_for('admin_index'))
+      return redirect(url_for('admin.admin_index'))
 
   return render_template('create.html')
 
@@ -46,7 +46,7 @@ def edit(id):
                          (title, content, id))
       connection.commit()
       connection.close()
-      return redirect(url_for('admin_index'))
+      return redirect(url_for('admin.admin_index'))
 
   return render_template('edit.html', post=post)
 
@@ -58,4 +58,4 @@ def delete(id):
   connection.commit()
   connection.close()
   flash('"{}" was successfully deleted!'.format(post['title']))
-  return redirect(url_for('admin_index'))
+  return redirect(url_for('admin.admin_index'))
