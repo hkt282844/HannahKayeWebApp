@@ -1,13 +1,16 @@
+<!--Admin page to display admin page content-->
+
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>{% block title %} Welcome to Hannah Kaye's Page {% endblock %}</h1>
+  <h1>{% block title %} Welcome to Hannah Kaye's Page! {% endblock %}</h1>
   {% for post in posts %}
-    <a href="{{ url_for('post', post_id=post['id']) }}">
+    <a href="{{ url_for('main.post', post_id=post['id']) }}">
       <h2>{{ post['title'] }}</h2>
     </a>
     <span class="badge badge-primary">{{ post['created'] }}</span>
-    <a href="{{ url_for('edit', id=post['id']) }}">
+    <hr>
+    <a href="{{ url_for('admin.edit', id=post['id']) }}">
       <span class="badge badge-warning">Edit</span>
     </a>
     <hr>

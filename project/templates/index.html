@@ -1,0 +1,13 @@
+<!--Index page to display main page content-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{% block title %} Welcome to Hannah Kaye's Page! {% endblock %}</h1>
+  {% for post in posts %}
+    <a href="{{ url_for('main.post', post_id=post['id']) }}">
+      <h2>{{ post['title'] }}</h2>
+    </a>
+    <span class="badge badge-primary">{{ post['created'] }}</span>
+  {% endfor %}
+{% endblock %}

@@ -1,3 +1,5 @@
+<!--Contains reusable layouts and links-->
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,7 +14,13 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <a class="navbar-brand" href="{{ url_for('index')}}">Hannah Kaye</a>
+      <a class="navbar-brand" href="{{ url_for('main.index')}}">Hannah Kaye</a>
+      <a href="{{ url_for('auth.login') }}" class="navbar-item">
+        Login
+      </a>
+      <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+        Logout
+      </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -22,7 +30,7 @@
             <a class="nav-link" href="#">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('create')}}">New Post</a>
+          <a class="nav-link" href="{{url_for('admin.create')}}">New Post</a>
         </li>
         </ul>
       </div>

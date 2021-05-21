@@ -1,38 +1,17 @@
-import sqlite3
-from flask import Flask, render_template, request, url_for, flash, redirect
-from werkzeug.exceptions import abort
-
-def get_db_connection():
-  connection = sqlite3.connect('database.db')
-  connection.row_factory = sqlite3.Row
-  return connection
-
-def get_post(post_id):
-  connection = get_db_connection()
-  post = connection.execute('SELECT * FROM posts WHERE id = ?',
-                            (post_id,)).fetchone()
-  connection.close()
-  if post is None:
-    abort(404)
-  return post
+from flask import Flask, Blueprint, render_template, request, url_for, flash, redirect
+from . import db, get_post, get_db_connection
 
 
-app = Flask(__name__)
-app.config.from_pyfile('config.py')
+admin = Blueprint('admin', __name__)
 
-@app.route('/')
-def index():
+@admin.route('/admin')
+def admin_index():
   connection = get_db_connection()
   posts = connection.execute('SELECT * FROM posts').fetchall()
   connection.close()
-  return render_template('index.html', posts=posts)
+  return render_template('admin_index.html', posts=posts)
 
-@app.route('/<int:post_id>')
-def post(post_id):
-  post = get_post(post_id)
-  return render_template('post.html', post=post)
-
-@app.route('/create', methods=('GET', 'POST'))
+@admin.route('/create', methods=('GET', 'POST'))
 def create():
   if request.method == 'POST':
     title = request.form['title']
@@ -46,11 +25,11 @@ def create():
                          (title, content))
       connection.commit()
       connection.close()
-      return redirect(url_for('index'))
+      return redirect(url_for('admin_index'))
 
   return render_template('create.html')
 
-@app.route('/<int:id>/edit', methods=('GET', 'POST'))
+@admin.route('/<int:id>/edit', methods=('GET', 'POST'))
 def edit(id):
   post = get_post(id)
 
@@ -67,11 +46,11 @@ def edit(id):
                          (title, content, id))
       connection.commit()
       connection.close()
-      return redirect(url_for('index'))
+      return redirect(url_for('admin_index'))
 
   return render_template('edit.html', post=post)
 
-@app.route('/<int:id>/delete', methods=('POST',))
+@admin.route('/<int:id>/delete', methods=('POST',))
 def delete(id):
   post = get_post(id)
   connection = get_db_connection()
@@ -79,4 +58,4 @@ def delete(id):
   connection.commit()
   connection.close()
   flash('"{}" was successfully deleted!'.format(post['title']))
-  return redirect(url_for('index'))
+  return redirect(url_for('admin_index'))
