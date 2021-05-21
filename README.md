@@ -5,7 +5,7 @@ Simple web app for Hannah Kaye music references
 * Python3
 * Python Environment
 * Flask & pacakges: __pip install flask flask-sqlalchemy flask-login__
-* SQLite database: run __python init_db.py__
+* SQLite database: create and run __python init_db.py__ to initialize database with an admin user and an initial post and ensure that db.sqlite is placed in **project** directory
 * __config.py__ file containing **SECRET_KEY**
 
 ### Instructions
