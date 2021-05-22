@@ -1,15 +1,14 @@
 from flask import Flask, Blueprint, render_template, request, url_for, flash, redirect
-from . import db, get_post, get_db_connection
+from . import db
+from .helper import get_post, get_all_posts, update_post, delete_post, create_post
+from .models import Post
 from flask_login import login_required, current_user
-
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-  connection = get_db_connection()
-  posts = connection.execute('SELECT * FROM posts').fetchall()
-  connection.close()
+  posts = get_all_posts()
   return render_template('index.html', posts=posts)
 
 @main.route('/<int:post_id>')
@@ -27,11 +26,7 @@ def create():
     if not title:
       flash('Title is required!')
     else:
-      connection = get_db_connection()
-      connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
-                         (title, content))
-      connection.commit()
-      connection.close()
+      create_post(title=title, content=content)
       return redirect(url_for('main.index'))
 
   return render_template('create.html')
@@ -48,12 +43,7 @@ def edit(id):
     if not title:
       flash('Title is required!')
     else:
-      connection = get_db_connection()
-      connection.execute('UPDATE posts SET title = ?, content = ?'
-                         ' WHERE id = ?',
-                         (title, content, id))
-      connection.commit()
-      connection.close()
+      update_post(post=post, title=title, content=content)
       return redirect(url_for('main.index'))
 
   return render_template('edit.html', post=post)
@@ -62,9 +52,6 @@ def edit(id):
 @login_required
 def delete(id):
   post = get_post(id)
-  connection = get_db_connection()
-  connection.execute('DELETE FROM posts WHERE id = ?', (id,))
-  connection.commit()
-  connection.close()
-  flash('"{}" was successfully deleted!'.format(post['title']))
+  delete_post(post)
+  flash('"{}" was successfully deleted!'.format(post.title))
   return redirect(url_for('main.index'))
