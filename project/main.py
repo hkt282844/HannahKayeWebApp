@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, render_template, request, url_for, flash, redirect
 from . import db
-from .helper import get_post, get_all_posts, update_post, delete_post, create_post
+from .helper import get_post, get_about, get_all_posts, update_post, update_about, delete_post, create_post
 from .models import Post
 from flask_login import login_required, current_user
 
@@ -55,3 +55,20 @@ def delete(id):
   delete_post(post)
   flash('"{}" was successfully deleted!'.format(post.title))
   return redirect(url_for('main.index'))
+
+@main.route('/about')
+def about():
+  about = get_about()
+  return render_template('about.html', about=about)
+
+@main.route('/about/edit', methods=('GET', 'POST'))
+@login_required
+def edit_about():
+  about = get_about()
+
+  if request.method == 'POST':
+    content = request.form['content']
+    update_about(about=about, content=content)
+    return redirect(url_for('main.about'))
+
+  return render_template('edit_about.html', about=about)

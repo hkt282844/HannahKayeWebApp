@@ -1,0 +1,13 @@
+<!--About page to display about content-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{% block title %} {{ about['title'] }} {% endblock %}</h2>
+  {% if current_user.is_authenticated %}
+  <a href="{{ url_for('main.edit_about') }}">
+    <span class="badge badge-warning">Edit</span>
+  </a>
+  {% endif %}
+  <p>{{ about['content'] }}</p>
+{% endblock %}

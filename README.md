@@ -13,3 +13,4 @@ To run the local web app for development, run __sh server.sh__. This will activa
 
 ### References
 https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3
+https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
