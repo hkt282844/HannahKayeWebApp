@@ -5,7 +5,7 @@
 {% block content %}
   <h2>{% block title %} {{ post['title'] }} {% endblock %}</h2>
   {% if current_user.is_authenticated %}
-  <a href="{{ url_for('main.edit_post', id=post['id']) }}">
+  <a href="{{ url_for('post.edit', id=post['id']) }}">
     <span class="badge badge-warning">Edit</span>
   </a>
   {% endif %}

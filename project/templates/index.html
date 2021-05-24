@@ -5,11 +5,11 @@
 {% block content %}
   <h1>{% block title %} Welcome to Hannah Kaye's Page! {% endblock %}</h1>
   {% for post in posts %}
-    <a href="{{ url_for('main.post', post_id=post['id']) }}">
+    <a href="{{ url_for('post.index', post_id=post['id']) }}">
       <h2>{{ post['title'] }}</h2>
     </a>
     {% if current_user.is_authenticated %}
-    <a href="{{ url_for('main.edit_post', id=post['id']) }}">
+    <a href="{{ url_for('post.edit', id=post['id']) }}">
       <span class="badge badge-warning">Edit</span>
     </a>
     {% endif %}
@@ -21,7 +21,7 @@
       <h2>{{ link['title'] }}</h2>
     </a>
     {% if current_user.is_authenticated %}
-    <a href="{{ url_for('main.edit_link', id=link['id']) }}">
+    <a href="{{ url_for('link.edit', id=link['id']) }}">
       <span class="badge badge-warning">Edit</span>
     </a>
     {% endif %}
