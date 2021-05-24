@@ -30,7 +30,12 @@
         </li>
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('main.create')}}">New Post</a>
+          <a class="nav-link" href="{{url_for('main.create_post')}}">New Post</a>
+        </li>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('main.create_link')}}">New Link</a>
         </li>
         {% endif %}
         </ul>

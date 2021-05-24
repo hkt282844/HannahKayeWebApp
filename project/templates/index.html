@@ -9,7 +9,19 @@
       <h2>{{ post['title'] }}</h2>
     </a>
     {% if current_user.is_authenticated %}
-    <a href="{{ url_for('main.edit', id=post['id']) }}">
+    <a href="{{ url_for('main.edit_post', id=post['id']) }}">
+      <span class="badge badge-warning">Edit</span>
+    </a>
+    {% endif %}
+    <hr>
+  {% endfor %}
+
+  {% for link in links %}
+    <a href="{{ link['content'] }}">
+      <h2>{{ link['title'] }}</h2>
+    </a>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('main.edit_link', id=link['id']) }}">
       <span class="badge badge-warning">Edit</span>
     </a>
     {% endif %}

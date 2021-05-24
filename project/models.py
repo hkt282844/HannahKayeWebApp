@@ -19,3 +19,9 @@ class About(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   title = db.Column(db.Text, nullable=False)
   content = db.Column(db.Text, nullable=False)
+
+class Link(db.Model):
+  __tablename__ = 'links'
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  title = db.Column(db.Text, nullable=False)
+  content = db.Column(db.Text, nullable=False)
