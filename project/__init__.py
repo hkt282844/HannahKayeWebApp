@@ -10,7 +10,7 @@ from .routes.link import link as link_blueprint
 from .models import db, User
 
 def create_app():
-  app = Flask(__name__, template_folder='templates')
+  app = Flask(__name__)
 
   app.config.from_pyfile('config.py')
   app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
